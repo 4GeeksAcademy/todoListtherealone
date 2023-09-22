@@ -5,8 +5,9 @@ const TodoList = () => {
   const [list, setList] = useState([]);
   const [invisible, setInVisible] = useState([]);
 
-  const url = "https://playground.4geeks.com/apis/fake/todos/user/Tomasmj503";
+  const url = "https://playground.4geeks.com/apis/fake/todos/user/Tomasmj123";
 
+  // 1 traer las tareas del servidor 
   useEffect(() => {
     getList();
   }, []);
@@ -18,6 +19,7 @@ const TodoList = () => {
     updatetask(list);}
   }, [list]);
 
+  // traer las tareas guardadas
   const getList = () => {
     fetch(url, {
       method: 'GET',
@@ -88,12 +90,6 @@ const TodoList = () => {
         .catch(error => console.error(error))
     };
 
-
-  const handleDelete = (position) => {
-    const updatedList = list.filter((_, index) => index !== position);
-    setList(updatedList);
-  };
-
   const handleChange = (e) => {
     setInputValue(e.target.value);
   }
@@ -116,20 +112,33 @@ const TodoList = () => {
     setInVisible(new Array(list.length).fill(0));
   }
 
+  const handleDelete = (position) => {
+    const updatedList = list.filter((_, index) => index !== position);
+    setList(updatedList);
+  };
+
+  const handleDeleteAll = () => {
+    setList([]);
+    updatetask([]);
+  };
+
+
   return (
     <div className="text-center">
-      <h1>Lista de Tareas</h1>
-      <input type="text" className="inputTask" placeholder="¿Qué necesita hacer?" value={inputValue} onChange={handleChange} onKeyDown={handleKeydown}></input>
+      
+      <input type="text" className="inputTask" placeholder="¿Cuál es la pinche tarea?" value={inputValue} onChange={handleChange} onKeyDown={handleKeydown}></input>
       <ul>
         {list?.map((dato, index) => (
           <li key={index} onMouseEnter={() => onDelete(index)} onMouseLeave={offDelete}>
             <p>{dato.label}</p>
-            <button style={{ opacity: invisible[index] !== 0 ? invisible[index] : 0 }} onClick={() => handleDelete(index)}>X</button>
+             <button style={{ opacity: invisible[index] !== 0 ? invisible[index] : 0 }} onClick={() => handleDelete(index)}>X</button>
           </li>
         ))}
       </ul>
 
-      <div><p>{list.length!=0? list.length + "item left": "No hay tareas, añadir tareas"}</p></div>
+      {list.length > 0 && (
+        <button onClick={handleDeleteAll}>Borrar todas las tareas</button>
+      )}
     </div>
   );
 };

@@ -28,3 +28,12 @@ li{
     justify-content: space-between;
     align-items: center;
 }
+input{
+    background-color: bisque;
+    width: 300px
+}
+
+
+.text-center{
+    background-color: bisque;
+}
