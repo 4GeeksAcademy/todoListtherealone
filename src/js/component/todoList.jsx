@@ -7,7 +7,7 @@ const TodoList = () => {
 
   const url = "https://playground.4geeks.com/apis/fake/todos/user/Tomasmj123";
 
-  // 1 traer las tareas del servidor 
+  // 1 traer las tareas del servidor, hace que la lista se actualiza cuando se recgarga la pagina
   useEffect(() => {
     getList();
   }, []);
